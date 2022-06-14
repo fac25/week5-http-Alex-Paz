@@ -1,0 +1,12 @@
+body {
+  display: grid;
+}
+
+input {
+  display: block;
+  margin: 10px 0 10px 0;
+}
+
+.container {
+  margin: auto;
+}
