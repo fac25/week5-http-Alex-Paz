@@ -1,0 +1,25 @@
+#news{
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+
+    grid-gap: 1rem;
+}
+.card{
+    padding: 1rem;
+    background: #dbe4f0;
+    border: 1px solid blue;
+    border-radius: 2%;
+}
+.card > * + * {
+    margin-top: 0.5rem;
+}
+
+.card > span:first-child{
+    display: inline-block;
+    padding: 0.25rem 0.5rem;
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    color: white;
+    background-color: blue;
+    border-radius: 20px;
+}

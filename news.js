@@ -1,14 +1,25 @@
 const form = document.querySelector("form");
 const output = document.querySelector("output");
+const newsContainer = document.querySelector("#news");
+let newsArr = [];
 function showNews(countryName) {
-  const myNews = [];
   const news = countryName.response.results;
-  //console.log(news);
+
   news.forEach((element) => {
-    for (let key in element) {
-      // myNews.push(element.webTitle);
-      console.log(element.webTitle);
-    }
+    let sectionName = element.sectionName;
+    let webPublicationDate = element.webPublicationDate;
+    let webTitle = element.webTitle;
+    let webUrl = element.webUrl;
+
+    let card = document.createElement("div");
+    card.classList = "card";
+    let cardContent = `
+        <span>${sectionName}</span>
+        <span>${webPublicationDate}</span>
+        <h2><a href="${webUrl}">${webTitle}</a></h2>
+       `;
+    card.innerHTML = cardContent;
+    newsContainer.appendChild(card);
   });
 }
 form.addEventListener("submit", (event) => {
@@ -16,7 +27,7 @@ form.addEventListener("submit", (event) => {
   event.preventDefault();
 
   // clear out any previous results
-  output.innerHTML = "";
+  newsContainer.innerHTML = "";
 
   //`https://content.guardianapis.com/world/${name}?api-key=b2cce45c-d598-4746-9bb0-676b8ea3b67d`
 
