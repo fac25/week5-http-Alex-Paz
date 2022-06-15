@@ -38,3 +38,13 @@ fetch(countryUrl)
     };
   })
   .catch((error) => console.log(error));
+
+// Fetch from time-api
+let apiKey = `1da0e66d8c6e4cb08f8b2086326b20b6`;
+fetch(
+  `https://api.ipgeolocation.io/timezone?apiKey=${apiKey}&lat=-27.4748&long=153.017`
+)
+  .then((response) => {
+    return response.json();
+  })
+  .then((data) => data);
