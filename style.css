@@ -13,11 +13,20 @@
 .card > * + * {
     margin-top: 0.5rem;
 }
-
-.card > span:first-child{
+.tags{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.tags span{
+    white-space: nowrap;
+    font-size: 0.8rem;
+}
+.tags > span:first-child{
     display: inline-block;
+    align-self: flex-start;
+    margin-right: 0.25rem;  
     padding: 0.25rem 0.5rem;
-    font-size: 0.75rem;
     text-transform: uppercase;
     color: white;
     background-color: blue;

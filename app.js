@@ -6,15 +6,16 @@ function showNews(countryName) {
 
   news.forEach((element) => {
     let sectionName = element.sectionName;
-    let webPublicationDate = element.webPublicationDate;
+    let webPublicationDate = new Date(element.webPublicationDate).toUTCString();
+    webPublicationDate = webPublicationDate.split(" ").slice(0, 4).join(" ");
     let webTitle = element.webTitle;
     let webUrl = element.webUrl;
 
     let card = document.createElement("div");
     card.classList = "card";
-    let cardContent = `
+    let cardContent = `<div class="tags">
         <span>${sectionName}</span>
-        <span>${webPublicationDate}</span>
+        <span>${webPublicationDate}</span></div>
         <h2><a href="${webUrl}">${webTitle}</a></h2>
        `;
     card.innerHTML = cardContent;
@@ -47,6 +48,9 @@ document.addEventListener("DOMContentLoaded", () => {
 // Fetch from country api
 //const countryUrl = `https://restcountries.com/v3.1/name/spain`;
 selectDrop.addEventListener("change", (e) => {
+  // clear out any previous results
+  newsContainer.innerHTML = "";
+
   let country = e.target.value;
   const countryUrl = `https://restcountries.com/v3.1/name/${country}`;
   const guardianURL = `https://content.guardianapis.com/search?q=${country}&api-key=b2cce45c-d598-4746-9bb0-676b8ea3b67d`;
