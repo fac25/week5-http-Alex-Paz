@@ -70,7 +70,7 @@ let infoObj = {};
 function cardsAndNewsFetch(country) {
   const countryUrl = `https://restcountries.com/v3.1/name/${country}?fullText=true`;
   const guardianURL = `https://content.guardianapis.com/search?section=world&q=${country}&api-key=b2cce45c-d598-4746-9bb0-676b8ea3b67d`;
-  // console.log(countryUrl);
+  //
   fetch(countryUrl)
     .then((response) => {
       return response.json();
@@ -86,8 +86,6 @@ function cardsAndNewsFetch(country) {
         longitude: data[0].capitalInfo.latlng[1],
       };
       showFacts(infoObj);
-      // console.log("--------89--------");
-      // console.log(infoObj);
       return infoObj;
     })
     .then(
@@ -123,8 +121,6 @@ function fillDropdown(data) {
       country: data[0].name.common,
     });
   });
-  console.log("124---------");
-  console.log(countryArray);
 }
 document.addEventListener("DOMContentLoaded", () => {
   fetch("https://restcountries.com/v3.1/all")
@@ -176,6 +172,7 @@ function getTimeOnLoad(ip) {
 }
 
 function getTimeAfterCountryChosen(country) {
+  timeContainer.innerHTML = "";
   const countryUrl = `https://restcountries.com/v3.1/name/${country}?fullText=true`;
 
   fetch(countryUrl)
@@ -183,10 +180,12 @@ function getTimeAfterCountryChosen(country) {
     .then((data) => data[0].capital.toString())
     .then((capital) =>
       fetch(
-        `https://api.ipgeolocation.io/timezone?apiKey=1da0e66d8c6e4cb08f8b2086326b20b6&location=${capital}`
+        `https://api.ipgeolocation.io/timezone?apiKey=1da0e66d8c6e4cb08f8b2086326b20b6&location=${capital},%20${country}`
       )
         .then((response) => response.json())
-        .then((data) => console.log(data.time_24))
+        .then((data) => {
+          showTime(data.time_24);
+        })
     );
 }
 
