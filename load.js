@@ -22,21 +22,34 @@ document.addEventListener("DOMContentLoaded", () => {
         .then((response) => response.json())
         .then((data) => data.ip)
         .then((ip) => {
-          fetch(
-            `https://api.ipgeolocation.io/ipgeo?apiKey=1da0e66d8c6e4cb08f8b2086326b20b6&ip=${ip}`
-          )
-            .then((response) => response.json())
-            .then((data) => {
-              const infoObj = {
-                capital: data.country_capital,
-                country: data.country_name,
-                time: data.time_zone.current_time.slice(11, 19),
-              };
-              console.log(infoObj);
-            });
+          getTime("ip", ip);
         })
     )
     .catch((error) => {
       console.log(error);
     });
 });
+
+function getTime(param1, param2) {
+  timeContainer.innerHTML = "";
+  fetch(
+    `https://api.ipgeolocation.io/ipgeo?apiKey=1da0e66d8c6e4cb08f8b2086326b20b6&${param1}=${param2}`
+  )
+    .then((response) => response.json())
+    .then((data) => {
+      dataObj(data);
+      cardsAndNewsFetch(infoObj.country, infoObj.time);
+      showTime(infoObj.time);
+    });
+}
+
+function dataObj(obj) {
+  const infoObj = {
+    capital: obj.country_capital,
+    country: obj.country_name,
+    time: obj.time_zone.current_time.slice(11, 19),
+  };
+  return infoObj;
+}
+
+console.log(dataObj);

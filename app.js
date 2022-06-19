@@ -11,6 +11,7 @@ function addCommas(nStr) {
   return x1 + x2;
 }
 // NEWS CARDS
+const timeContainer = document.querySelector("#time");
 const dataContainer = document.querySelector("#datacontainer");
 let newsArr = [];
 function showNews(countryName) {
@@ -34,6 +35,14 @@ function showNews(countryName) {
     dataContainer.appendChild(card);
   });
 }
+
+function showTime(time) {
+  let card = document.createElement("div");
+  let cardContent = `<span>${time}</span>`;
+  card.innerHTML = cardContent;
+  timeContainer.appendChild(card);
+}
+
 function showFacts(countryFacts) {
   let population = addCommas(countryFacts.population);
   let card = document.createElement("div");
@@ -56,7 +65,7 @@ function showFacts(countryFacts) {
   dataContainer.appendChild(card);
 }
 //Create dropdown menu with list of countries
-const errorOutput = document.querySelector("output");
+/*const errorOutput = document.querySelector("output");
 const countryArray = [];
 const selectDrop = document.getElementById("countries");
 document.addEventListener("DOMContentLoaded", () => {
@@ -77,23 +86,19 @@ document.addEventListener("DOMContentLoaded", () => {
     .catch((error) => {
       console.log(error);
     });
-});
+});*/
 // Fetch from country api
-selectDrop.addEventListener("change", (e) => {
-  // clear out any previous results
-  dataContainer.innerHTML = "";
-
-  let country = e.target.value;
-  let noWhitespace = country.replace(/\s/g, "%20");
+let infoObj = {};
+function cardsAndNewsFetch(country) {
   const countryUrl = `https://restcountries.com/v3.1/name/${country}`;
-  const guardianURL = `https://content.guardianapis.com/search?section=world&q=${noWhitespace}&api-key=b2cce45c-d598-4746-9bb0-676b8ea3b67d`;
+  const guardianURL = `https://content.guardianapis.com/search?section=world&q=${country}&api-key=b2cce45c-d598-4746-9bb0-676b8ea3b67d`;
   console.log(guardianURL);
   fetch(countryUrl)
     .then((response) => {
       return response.json();
     })
     .then((data) => {
-      const infoObj = {
+      infoObj = {
         country: data[0].name.common,
         capital: data[0].capital,
         population: data[0].population,
@@ -101,8 +106,8 @@ selectDrop.addEventListener("change", (e) => {
         latitude: data[0].capitalInfo.latlng[0],
         longitude: data[0].capitalInfo.latlng[1],
       };
-      console.log(data);
       showFacts(infoObj);
+      return infoObj;
     })
     .then(
       fetch(guardianURL)
@@ -123,4 +128,80 @@ selectDrop.addEventListener("change", (e) => {
         errorOutput.textContent = "⚠️ Something went wrong";
       }
     });
+}
+
+//Time on load
+const errorOutput = document.querySelector("output");
+const countryArray = [];
+const selectDrop = document.getElementById("countries");
+document.addEventListener("DOMContentLoaded", () => {
+  fetch("https://restcountries.com/v3.1/all")
+    .then((response) => {
+      return response.json();
+    })
+    .then((data) => {
+      let output = "";
+      data.map((country) => {
+        countryArray.push(country.name.common);
+      });
+      countryArray.sort().forEach((country) => {
+        output += `<option value="${country}">${country}</option>`;
+        selectDrop.innerHTML = output;
+      });
+    })
+    .then(
+      fetch("https://api.ipify.org/?format=json")
+        .then((response) => response.json())
+        .then((data) => data.ip)
+        .then((ip) => {
+          getTimeOnLoad(ip);
+        })
+    )
+    .catch((error) => {
+      console.log(error);
+    });
+});
+let infoObj1 = {};
+
+function getTimeOnLoad(ip) {
+  timeContainer.innerHTML = "";
+  fetch(
+    `https://api.ipgeolocation.io/ipgeo?ip=${ip}&apiKey=1da0e66d8c6e4cb08f8b2086326b20b6`
+  )
+    .then((response) => response.json())
+    .then((data) => {
+      console.log(data);
+      infoObj1 = {
+        capital: data.country_capital,
+        country: data.country_name,
+        time: data.time_zone.current_time.slice(11, 19),
+      };
+      cardsAndNewsFetch(infoObj1.country, infoObj1.time);
+      showTime(infoObj1.time);
+      return infoObj1;
+    });
+}
+
+function getTimeAfterCountryChosen(country) {
+  const countryUrl = `https://restcountries.com/v3.1/name/${country}`;
+
+  fetch(countryUrl)
+    .then((response) => response.json())
+    .then((data) => data[0].capital.toString())
+    .then((capital) =>
+      fetch(
+        `https://api.ipgeolocation.io/timezone?apiKey=1da0e66d8c6e4cb08f8b2086326b20b6&location=${capital}`
+      )
+        .then((response) => response.json())
+        .then((data) => console.log(data.time_24))
+    );
+}
+
+selectDrop.addEventListener("change", (e) => {
+  // clear out any previous results
+  dataContainer.innerHTML = "";
+  let country = e.target.value;
+  let noWhitespace = country.replace(/\s/g, "%20");
+  cardsAndNewsFetch(noWhitespace);
+  getTimeAfterCountryChosen(noWhitespace);
 });
