@@ -64,41 +64,20 @@ function showFacts(countryFacts) {
   card.innerHTML = cardContent;
   dataContainer.appendChild(card);
 }
-//Create dropdown menu with list of countries
-/*const errorOutput = document.querySelector("output");
-const countryArray = [];
-const selectDrop = document.getElementById("countries");
-document.addEventListener("DOMContentLoaded", () => {
-  fetch("https://restcountries.com/v3.1/all")
-    .then((response) => {
-      return response.json();
-    })
-    .then((data) => {
-      let output = "";
-      data.map((country) => {
-        countryArray.push(country.name.common);
-      });
-      countryArray.sort().forEach((country) => {
-        output += `<option value="${country}">${country}</option>`;
-        selectDrop.innerHTML = output;
-      });
-    })
-    .catch((error) => {
-      console.log(error);
-    });
-});*/
+
 // Fetch from country api
 let infoObj = {};
 function cardsAndNewsFetch(country) {
-  const countryUrl = `https://restcountries.com/v3.1/name/${country}`;
+  const countryUrl = `https://restcountries.com/v3.1/name/${country}?fullText=true`;
   const guardianURL = `https://content.guardianapis.com/search?section=world&q=${country}&api-key=b2cce45c-d598-4746-9bb0-676b8ea3b67d`;
-  console.log(guardianURL);
+  // console.log(countryUrl);
   fetch(countryUrl)
     .then((response) => {
       return response.json();
     })
     .then((data) => {
       infoObj = {
+        countryName: data[0].name.official,
         country: data[0].name.common,
         capital: data[0].capital,
         population: data[0].population,
@@ -107,6 +86,8 @@ function cardsAndNewsFetch(country) {
         longitude: data[0].capitalInfo.latlng[1],
       };
       showFacts(infoObj);
+      // console.log("--------89--------");
+      // console.log(infoObj);
       return infoObj;
     })
     .then(
@@ -134,13 +115,25 @@ function cardsAndNewsFetch(country) {
 const errorOutput = document.querySelector("output");
 const countryArray = [];
 const selectDrop = document.getElementById("countries");
+let dropDownCountries = {};
+function fillDropdown(data) {
+  data.map(() => {
+    countryArray.push({
+      countryName: data[0].name.official,
+      country: data[0].name.common,
+    });
+  });
+  console.log("124---------");
+  console.log(countryArray);
+}
 document.addEventListener("DOMContentLoaded", () => {
   fetch("https://restcountries.com/v3.1/all")
     .then((response) => {
       return response.json();
     })
     .then((data) => {
-      let output = "";
+      let output =
+        "<option disabled selected value> -- select a country -- </option>";
       data.map((country) => {
         countryArray.push(country.name.common);
       });
@@ -183,7 +176,7 @@ function getTimeOnLoad(ip) {
 }
 
 function getTimeAfterCountryChosen(country) {
-  const countryUrl = `https://restcountries.com/v3.1/name/${country}`;
+  const countryUrl = `https://restcountries.com/v3.1/name/${country}?fullText=true`;
 
   fetch(countryUrl)
     .then((response) => response.json())
