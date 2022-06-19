@@ -1,4 +1,18 @@
-#news{
+h1{
+    text-align: center;
+}
+.container{
+    max-width: 60rem;
+    margin: 2rem auto 4rem;
+}
+.container > div {
+    display: flex;
+    justify-content: center;
+}
+.container > div > * + * {
+    margin-left: 1rem;
+}
+#datacontainer{
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
 
@@ -31,4 +45,23 @@
     color: white;
     background-color: blue;
     border-radius: 20px;
+}
+.card_facts{
+    grid-row: 1;
+    grid-column-start: 1;
+    grid-column-end: 3;
+    text-align: center;
+}
+.card_facts p{
+    margin-top: 0;
+}
+.card_facts span{
+display: block;
+font-weight: bold;
+}
+.card_facts img{
+    display: block;
+    margin: auto;
+    max-width: 10em;
+    height: auto;
 }
