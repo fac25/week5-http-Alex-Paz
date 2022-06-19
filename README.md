@@ -5,8 +5,6 @@ As a user, I want to:
 
 - [ ] See a mashup of news and some basic info of a searched country. 
 
-- [ ] Search for a country and be shown related info and news.
-
 - [ ] View the app on all of my devices.
 
 
