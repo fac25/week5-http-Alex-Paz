@@ -11,11 +11,17 @@ body {
     font-size: 1.25rem;
 }
 select{
+    width: 15em;
     background: #dbe4f0;
     padding: 1rem;
     font-size: 1.25rem;
     border: blue 1px solid;
     border-radius: 2em;
+}
+@media(min-width:768px){
+    select{
+        width: auto;
+    }
 }
 .d-none{
     display: none;
@@ -71,8 +77,13 @@ select{
 .card_facts{
     grid-row: 1;
     grid-column-start: 1;
-    grid-column-end: 3;
+    grid-column-end: 2;
     text-align: center;
+}
+@media(min-width:768px){
+    .card_facts{
+        grid-column-end: 3;
+    }
 }
 .card_facts p{
     margin-top: 0;
