@@ -1,5 +1,30 @@
-h1{
+body {
+    font-family: system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue","Noto Sans","Liberation Sans",Arial,sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol","Noto Color Emoji";
+}
+.container h1,
+.container p{
     text-align: center;
+    margin-top: 0;
+    margin-bottom: 0.5rem;
+}
+.container p{
+    font-size: 1.25rem;
+}
+select{
+    width: 15em;
+    background: #dbe4f0;
+    padding: 1rem;
+    font-size: 1.25rem;
+    border: blue 1px solid;
+    border-radius: 2em;
+}
+@media(min-width:768px){
+    select{
+        width: auto;
+    }
+}
+.d-none{
+    display: none;
 }
 .container{
     max-width: 60rem;
@@ -9,8 +34,11 @@ h1{
     display: flex;
     justify-content: center;
 }
-.container > div > * + * {
-    margin-left: 1rem;
+.container > * + * {
+    margin-top: 1.25rem;
+}
+.container .heading {
+    flex-direction: column;
 }
 #datacontainer{
     display: grid;
@@ -49,8 +77,13 @@ h1{
 .card_facts{
     grid-row: 1;
     grid-column-start: 1;
-    grid-column-end: 3;
+    grid-column-end: 2;
     text-align: center;
+}
+@media(min-width:768px){
+    .card_facts{
+        grid-column-end: 3;
+    }
 }
 .card_facts p{
     margin-top: 0;
@@ -64,4 +97,18 @@ font-weight: bold;
     margin: auto;
     max-width: 10em;
     height: auto;
+}
+.row {
+    display: flex;
+flex-wrap: wrap;
+}
+.col {
+    flex:1;
+}
+#time{
+    min-height: 3rem;
+}
+#time > span{
+    font-size: 3rem;
+    color: blue;
 }

@@ -13,7 +13,9 @@ function addCommas(nStr) {
 // NEWS CARDS
 const timeContainer = document.querySelector("#time");
 const dataContainer = document.querySelector("#datacontainer");
+//const mapDiv = document.getElementById("osm-map");
 let newsArr = [];
+
 function showNews(countryName) {
   const news = countryName.response.results;
 
@@ -37,8 +39,8 @@ function showNews(countryName) {
 }
 
 function showTime(time) {
-  let card = document.createElement("div");
-  let cardContent = `<span>${time}</span>`;
+  let card = document.createElement("span");
+  let cardContent = `${time}`;
   card.innerHTML = cardContent;
   timeContainer.appendChild(card);
 }
@@ -47,24 +49,77 @@ function showFacts(countryFacts) {
   let population = addCommas(countryFacts.population);
   let card = document.createElement("div");
   card.classList = "card card_facts";
+
   let cardContent = `
         <img src="${countryFacts.flag}" alt="${countryFacts.country} flag" />
         <h2>${countryFacts.country}</h2>
-        <div class="">
+        <div class="row">
+        <div class="col">
           <div class="">
             <span>Capital</span>
             <p>${countryFacts.capital}</p>
           </div>
           <div class="">
+          <span>Latitude / Longitude</span>
+          <p>${countryFacts.latitude} / ${countryFacts.longitude}</p>
+        </div>
+          
+        </div>
+        <div class="col">
+        <div class="">
             <span>Population</span>
             <p>${population}</p>
           </div>
+        <div class="">
+          <span><a href="https://en.wikipedia.org/wiki/Gini_coefficient" target="_blank">Gini Index</a></span>
+          <p> todo </p>
         </div>
+      </div>
+      <div class="col">
+      <div class="">
+        <span>Language/s</span>
+        <p> todo </p>
+      </div>
+      <div class="">
+        <span>Currency</span>
+        <p>todo</p>
+      </div>
+    </div>
+    </div>
       `;
   card.innerHTML = cardContent;
   dataContainer.appendChild(card);
-}
 
+  // Map created with https://leafletjs.com/
+  // Where you want to render the map.
+  // mapDiv.innerHTML = "";
+
+  // Height has to be set. You can do this in CSS too.
+  // mapDiv.style = "height:300px;";
+
+  // Create Leaflet map on map element.
+  //let map = L.map(mapDiv);
+
+  // Add OSM tile layer to the Leaflet map.
+  // L.tileLayer("http://{s}.tile.osm.org/{z}/{x}/{y}.png", {
+  //   attribution:
+  //     '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors',
+  // }).addTo(map);
+
+  // Target's GPS coordinates.
+  // var target = L.latLng(
+  //   `${countryFacts.latitude}`,
+  //   `${countryFacts.longitude}`
+  // );
+
+  // Set map's center to target with zoom 14.
+  // map.setView(target, 4);
+
+  // Place a marker on the same location.
+  //// L.marker(target).addTo(map);
+}
+// Error output
+const errorOutput = document.querySelector("output");
 // Fetch from country api
 let infoObj = {};
 function cardsAndNewsFetch(country) {
@@ -84,7 +139,9 @@ function cardsAndNewsFetch(country) {
         flag: data[0].flags.png,
         latitude: data[0].capitalInfo.latlng[0],
         longitude: data[0].capitalInfo.latlng[1],
+        map: data[0].maps.googleMaps,
       };
+      console.log(data);
       showFacts(infoObj);
       return infoObj;
     })
@@ -110,18 +167,9 @@ function cardsAndNewsFetch(country) {
 }
 
 //Time on load
-const errorOutput = document.querySelector("output");
 const countryArray = [];
 const selectDrop = document.getElementById("countries");
-let dropDownCountries = {};
-function fillDropdown(data) {
-  data.map(() => {
-    countryArray.push({
-      countryName: data[0].name.official,
-      country: data[0].name.common,
-    });
-  });
-}
+
 document.addEventListener("DOMContentLoaded", () => {
   fetch("https://restcountries.com/v3.1/all")
     .then((response) => {
@@ -150,8 +198,8 @@ document.addEventListener("DOMContentLoaded", () => {
       console.log(error);
     });
 });
-let infoObj1 = {};
 
+let infoObj1 = {};
 function getTimeOnLoad(ip) {
   timeContainer.innerHTML = "";
   fetch(
@@ -191,6 +239,7 @@ function getTimeAfterCountryChosen(country) {
 
 selectDrop.addEventListener("change", (e) => {
   // clear out any previous results
+  errorOutput.innerHTML = "";
   dataContainer.innerHTML = "";
   let country = e.target.value;
   let noWhitespace = country.replace(/\s/g, "%20");
