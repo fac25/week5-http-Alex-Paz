@@ -10,20 +10,29 @@
 </head>
 
 <body>
-  <div class="container">
-    <div id="time"></div>
-    <h1>Country Search</h1>
-    <div>
-      <label for="country">Country name</label>
-      <select name="countries" id="countries"></select>
-      <output></output>
+  <header>
+    <div class="container">
+      <div id="time"></div>
+      <div class="heading">
+        <h1>Countries of the world</h1>
+        <p>Learn about any country</p>
+      </div>
+      <div class="select-element">
+        <label for="country" class="d-none">Country name</label>
+        <select name="countries" id="countries"></select>
+        <output></output>
+      </div>
     </div>
-  </div>
-  <div id="datacontainer"></div>
-  <!-- <script src="load.js"></script> -->
+  </header>
+  <main>
+    <div id="datacontainer"></div>
+    <!-- <div id="osm-map"></div> -->
+  </main>
+
   <script src="app.js"></script>
-  <!-- <script src="script.js"></script>
-  <script src="news.js"></script> -->
+
+  <!-- <script src="https://unpkg.com/leaflet@1.6.0/dist/leaflet.js"></script>
+  <link href="https://unpkg.com/leaflet@1.6.0/dist/leaflet.css" rel="stylesheet" /> -->
 </body>
 
 </html>
