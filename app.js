@@ -47,7 +47,6 @@ function showTime(time) {
 
 function showFacts(countryFacts) {
   let population = addCommas(countryFacts.population);
-  let currency = countryFacts.currency;
   let language = countryFacts.language.join(" ");
 
   let card = document.createElement("div");
@@ -75,8 +74,8 @@ function showFacts(countryFacts) {
             <p>${population}</p>
           </div>
         <div class="">
-          <span><a href="https://en.wikipedia.org/wiki/Gini_coefficient" target="_blank">Gini Index</a></span>
-          <p> todo </p>
+          <span>Continent</a></span>
+          <p>${countryFacts.continent}</p>
         </div>
       </div>
       <div class="col">
@@ -86,7 +85,7 @@ function showFacts(countryFacts) {
       </div>
       <div class="">
         <span>Currency</span>
-        <p>${currency}</p>
+        <p>${countryFacts.currency}</p>
       </div>
     </div>
     </div>
@@ -142,6 +141,7 @@ function cardsAndNewsFetch(country) {
         language.push(data[0].languages[code]);
       });
       infoObj = {
+        continent: data[0].continents,
         countryName: data[0].name.official,
         country: data[0].name.common,
         currency: data[0].currencies[currencyCode].name,
@@ -153,8 +153,6 @@ function cardsAndNewsFetch(country) {
         longitude: data[0].capitalInfo.latlng[1],
         map: data[0].maps.googleMaps,
       };
-
-      console.log(data);
       showFacts(infoObj);
       return infoObj;
     })
@@ -224,7 +222,7 @@ function getTimeOnLoad(ip) {
       infoObj1 = {
         capital: data.country_capital,
         country: data.country_name,
-        time: data.time_zone.current_time.slice(11, 19),
+        time: data.time_zone.current_time.slice(11, 16),
       };
       cardsAndNewsFetch(infoObj1.country, infoObj1.time);
       showTime(infoObj1.time);
