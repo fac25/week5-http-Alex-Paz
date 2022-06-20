@@ -47,7 +47,10 @@ function showTime(time) {
 
 function showFacts(countryFacts) {
   let population = addCommas(countryFacts.population);
+  let currency = countryFacts.currency;
+
   let card = document.createElement("div");
+
   card.classList = "card card_facts";
 
   let cardContent = `
@@ -82,7 +85,7 @@ function showFacts(countryFacts) {
       </div>
       <div class="">
         <span>Currency</span>
-        <p>todo</p>
+        <p>${currency}</p>
       </div>
     </div>
     </div>
@@ -131,9 +134,11 @@ function cardsAndNewsFetch(country) {
       return response.json();
     })
     .then((data) => {
+      const currencyCode = Object.keys(data[0].currencies);
       infoObj = {
         countryName: data[0].name.official,
         country: data[0].name.common,
+        currency: data[0].currencies[currencyCode].name,
         capital: data[0].capital,
         population: data[0].population,
         flag: data[0].flags.png,
