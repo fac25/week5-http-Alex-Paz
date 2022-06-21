@@ -1,5 +1,8 @@
 # Week 5 API Project
 
+## Instructions: 
+Select a country from the dropdown menu to display some facts about that country and some news articles related to it as well. 
+
 ## User Stories:
 As a user, I want to:
 
