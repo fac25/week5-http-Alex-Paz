@@ -3,6 +3,29 @@ body {
     "Noto Sans", "Liberation Sans", Arial, sans-serif, "Apple Color Emoji",
     "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
 }
+a {
+  /* color: blue;
+  text-decoration: none;
+  transition: all 0.5s; */
+}
+a:link {
+  color: blue;
+  text-decoration: none;
+  transition: all 0.5s;
+}
+
+a:visited {
+  color: darkblue;
+}
+
+a:hover {
+  background-color: white;
+}
+
+a:focus {
+  background-color: white;
+}
+
 .container h1,
 .container p {
   text-align: center;
