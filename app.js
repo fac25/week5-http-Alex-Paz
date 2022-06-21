@@ -47,7 +47,10 @@ function showTime(time) {
 
 function showFacts(countryFacts) {
   let population = addCommas(countryFacts.population);
-  let language = countryFacts.language.join(" ");
+
+  let currency = countryFacts.currency;
+  let language = countryFacts.language.join(", ");
+
 
   let card = document.createElement("div");
 
@@ -210,7 +213,6 @@ document.addEventListener("DOMContentLoaded", () => {
     });
 });
 
-let infoObj1 = {};
 function getTimeOnLoad(ip) {
   timeContainer.innerHTML = "";
   fetch(
