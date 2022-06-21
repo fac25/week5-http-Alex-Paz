@@ -1,7 +1,9 @@
 # Week 5 API Project
 
 ## Instructions: 
-Select a country from the dropdown menu to display some facts about that country and some news articles related to it as well. 
+Select a country from the dropdown menu. 
+
+A box will appear with some facts about that country as well as some news articles and the local time. 
 
 ## User Stories:
 As a user, I want to:
@@ -13,7 +15,7 @@ As a user, I want to:
 
 Stretch stories: 
 
-- [ ] As an impatient user, I want to see some indication that data is loading
+- [x] As an impatient user, I want to see some indication that data is loading
 
 - [x] As a confused user, I want to be told when something goes wrong
 
