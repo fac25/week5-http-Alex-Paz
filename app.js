@@ -51,13 +51,12 @@ function showFacts(countryFacts) {
   let currency = countryFacts.currency;
   let language = countryFacts.language.join(", ");
 
-
   let card = document.createElement("div");
 
   card.classList = "card card_facts";
 
   let cardContent = `
-        <img src="${countryFacts.flag}" alt="${countryFacts.country} flag" />
+       <div class="card_facts-image"><img src="${countryFacts.flag}" alt="${countryFacts.country} flag" /></div>
         <h2>${countryFacts.country}</h2>
         <div class="row">
         <div class="col">
@@ -190,14 +189,13 @@ document.addEventListener("DOMContentLoaded", () => {
       return response.json();
     })
     .then((data) => {
-      let output =
-        "<option disabled selected value> -- select a country -- </option>";
+      let output = " ";
       data.map((country) => {
         countryArray.push(country.name.common);
       });
       countryArray.sort().forEach((country) => {
-        output += `<option value="${country}">${country}</option>`;
-        selectDrop.innerHTML = output;
+        // output += `<option value="${country}">${country}</option>`;
+        selectDrop.innerHTML += `<option value="${country}">${country}</option>`;
       });
     })
     .then(
