@@ -1,40 +1,39 @@
 <!DOCTYPE html>
 <html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="style.css" />
+    <title>Document</title>
+  </head>
 
-<head>
-  <meta charset="UTF-8" />
-  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <link rel="stylesheet" href="style.css" />
-  <title>Document</title>
-</head>
-
-<body>
-  <header>
-    <div class="container">
-      <div id="time"></div>
-      <div class="heading">
-        <h1>Countries of the world</h1>
-        <p>Learn about any country</p>
+  <body>
+    <header>
+      <div class="container">
+        <div id="time"></div>
+        <div id="loading"></div>
+        <div class="heading">
+          <h1>Countries of the world</h1>
+          <p>Learn about any country</p>
+        </div>
+        <div class="select-element">
+          <label for="country" class="d-none">Country name</label>
+          <select name="countries" id="countries">
+            <option disabled selected value>-- select a country --</option>
+          </select>
+          <output></output>
+        </div>
       </div>
-      <div class="select-element">
-        <label for="country" class="d-none">Country name</label>
-        <select name="countries" id="countries">
-          <option disabled selected value> -- select a country -- </option>
-        </select>
-        <output></output>
-      </div>
-    </div>
-  </header>
-  <main>
-    <div id="datacontainer"></div>
-    <!-- <div id="osm-map"></div> -->
-  </main>
+    </header>
+    <main>
+      <div id="datacontainer"></div>
+      <!-- <div id="osm-map"></div> -->
+    </main>
 
-  <script src="app.js"></script>
+    <script src="app.js"></script>
 
-  <!-- <script src="https://unpkg.com/leaflet@1.6.0/dist/leaflet.js"></script>
+    <!-- <script src="https://unpkg.com/leaflet@1.6.0/dist/leaflet.js"></script>
   <link href="https://unpkg.com/leaflet@1.6.0/dist/leaflet.css" rel="stylesheet" /> -->
-</body>
-
+  </body>
 </html>

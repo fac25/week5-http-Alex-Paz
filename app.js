@@ -128,6 +128,7 @@ const errorOutput = document.querySelector("output");
 // Fetch from country api
 let infoObj = {};
 function cardsAndNewsFetch(country) {
+  hideLoading();
   const countryUrl = `https://restcountries.com/v3.1/name/${country}?fullText=true`;
   const guardianURL = `https://content.guardianapis.com/search?section=world&q=${country}&api-key=b2cce45c-d598-4746-9bb0-676b8ea3b67d`;
   //
@@ -179,11 +180,22 @@ function cardsAndNewsFetch(country) {
     });
 }
 
+//Loading functions
+const loader = document.getElementById("loading");
+
+function displayLoading() {
+  loader.style.display = "block";
+  loader.classList.add("display");
+}
+function hideLoading() {
+  loader.style.display = "none";
+}
 //Time on load
 const countryArray = [];
 const selectDrop = document.getElementById("countries");
 
 document.addEventListener("DOMContentLoaded", () => {
+  displayLoading();
   fetch("https://restcountries.com/v3.1/all")
     .then((response) => {
       return response.json();
@@ -243,12 +255,13 @@ function getTimeAfterCountryChosen(country) {
       )
         .then((response) => response.json())
         .then((data) => {
-          showTime(data.time_24);
+          showTime(data.time_24.slice(0, 5));
         })
     );
 }
 
 selectDrop.addEventListener("change", (e) => {
+  displayLoading();
   // clear out any previous results
   errorOutput.innerHTML = "";
   dataContainer.innerHTML = "";
