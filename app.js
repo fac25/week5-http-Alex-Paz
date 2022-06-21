@@ -130,7 +130,6 @@ const errorOutput = document.querySelector("output");
 // Fetch from country api
 let infoObj = {};
 function cardsAndNewsFetch(country) {
-  hideLoading();
   const countryUrl = `https://restcountries.com/v3.1/name/${country}?fullText=true`;
   const guardianURL = `https://content.guardianapis.com/search?section=world&q=${country}&api-key=b2cce45c-d598-4746-9bb0-676b8ea3b67d`;
   //
@@ -158,6 +157,7 @@ function cardsAndNewsFetch(country) {
         longitude: data[0].capitalInfo.latlng[1],
         map: data[0].maps.googleMaps,
       };
+      hideLoading();
       showFacts(infoObj);
       return infoObj;
     })
@@ -178,6 +178,7 @@ function cardsAndNewsFetch(country) {
         errorOutput.textContent = `⚠️ Couldn't find "${country}"`;
       } else {
         errorOutput.textContent = "⚠️ Something went wrong";
+        hideLoading();
       }
     });
 }
@@ -186,11 +187,14 @@ function cardsAndNewsFetch(country) {
 const loader = document.getElementById("loading");
 
 function displayLoading() {
-  loader.style.display = "block";
+  loader.classList.add("dblock");
+  loader.classList.remove("dnone");
   loader.classList.add("display");
 }
 function hideLoading() {
-  loader.style.display = "none";
+  loader.classList.remove("dblock");
+  loader.classList.remove("display");
+  loader.classList.add("dnone");
 }
 //Time on load
 const countryArray = [];
@@ -203,7 +207,7 @@ document.addEventListener("DOMContentLoaded", () => {
       return response.json();
     })
     .then((data) => {
-      let output = " ";
+      // let output = " ";
       data.map((country) => {
         countryArray.push(country.name.common);
       });

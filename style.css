@@ -25,6 +25,13 @@ a:hover {
 a:focus {
   background-color: white;
 }
+.dnone {
+  display: none;
+}
+
+.dblock {
+  display: block;
+}
 
 .container h1,
 .container p {
@@ -149,12 +156,12 @@ select {
   border-top: 6px solid #9c41f2;
   border-radius: 100%;
   margin: auto;
-  display: block;
-  visibility: hidden;
+  /* display: none; */
+  /* visibility: hidden; */
   animation: spin 1s infinite linear;
 }
 #loading.display {
-  visibility: visible;
+  /* visibility: visible; */
 }
 @keyframes spin {
   from {
