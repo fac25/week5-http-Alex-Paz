@@ -31,3 +31,7 @@ Stretch stories:
 - [x] A responsive, mobile-first design
 
 - [ ] Ensure your app is accessible to as many different users as possible
+
+## Things to address
+
+- Make a more specific error if the country doesn't have any facts.
