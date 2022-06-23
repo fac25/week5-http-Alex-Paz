@@ -41,6 +41,7 @@ function showNews(countryName) {
 }
 
 function showTime(time) {
+  hideLoading();
   let card = document.createElement("span");
   let cardContent = `${time}`;
   card.innerHTML = cardContent;
@@ -49,12 +50,9 @@ function showTime(time) {
 
 function showFacts(countryFacts) {
   let population = addCommas(countryFacts.population);
-
-  let currency = countryFacts.currency;
   let language = countryFacts.language.join(", ");
 
   let card = document.createElement("div");
-
   card.classList = "card card_facts";
 
   let cardContent = `
@@ -157,9 +155,7 @@ function cardsAndNewsFetch(country) {
         longitude: data[0].capitalInfo.latlng[1],
         map: data[0].maps.googleMaps,
       };
-      hideLoading();
       showFacts(infoObj);
-      return infoObj;
     })
     .then(
       fetch(guardianURL)
@@ -173,7 +169,6 @@ function cardsAndNewsFetch(country) {
     )
     // if the request is unsuccessful
     .catch((error) => {
-      console.log(error);
       if (error.message === "404") {
         errorOutput.textContent = `⚠️ Couldn't find "${country}"`;
       } else {
@@ -225,7 +220,12 @@ document.addEventListener("DOMContentLoaded", () => {
         })
     )
     .catch((error) => {
-      console.log(error);
+      if (error.message === "404") {
+        errorOutput.textContent = `⚠️ Couldn't find your IP address"`;
+      } else {
+        errorOutput.textContent = "⚠️ Something went wrong";
+        hideLoading();
+      }
     });
 });
 
@@ -236,7 +236,6 @@ function getTimeOnLoad(ip) {
   )
     .then((response) => response.json())
     .then((data) => {
-      console.log(data);
       infoObj1 = {
         capital: data.country_capital,
         country: data.country_name,
@@ -244,7 +243,14 @@ function getTimeOnLoad(ip) {
       };
       cardsAndNewsFetch(infoObj1.country, infoObj1.time);
       showTime(infoObj1.time);
-      return infoObj1;
+    })
+    .catch((error) => {
+      if (error.message === "404") {
+        errorOutput.textContent = `⚠️ Couldn't find your local time."`;
+      } else {
+        errorOutput.textContent = "⚠️ Something went wrong";
+        hideLoading();
+      }
     });
 }
 
@@ -254,7 +260,9 @@ function getTimeAfterCountryChosen(country) {
 
   fetch(countryUrl)
     .then((response) => response.json())
-    .then((data) => data[0].capital.toString())
+    .then((data) => {
+      data[0].capital.toString();
+    })
     .then((capital) =>
       fetch(
         `https://api.ipgeolocation.io/timezone?apiKey=1da0e66d8c6e4cb08f8b2086326b20b6&location=${capital},%20${country}`
@@ -263,7 +271,15 @@ function getTimeAfterCountryChosen(country) {
         .then((data) => {
           showTime(data.time_24.slice(0, 5));
         })
-    );
+    )
+    .catch((error) => {
+      if (error.message === "404") {
+        errorOutput.textContent = `⚠️ Couldn't find the time in ${country}."`;
+      } else {
+        errorOutput.textContent = "⚠️ Something went wrong";
+        hideLoading();
+      }
+    });
 }
 
 selectDrop.addEventListener("change", (e) => {
