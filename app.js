@@ -1,5 +1,5 @@
 //HELPER FUNCTIONS
-// add commas to numbers. e.g 1200000 1,200,000
+// add commas to figures. e.g 1200000 1,200,000
 function addCommas(nStr) {
   nStr += "";
   x = nStr.split(".");
